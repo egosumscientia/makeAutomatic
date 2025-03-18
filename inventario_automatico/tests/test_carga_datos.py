@@ -1,8 +1,8 @@
 import pytest
 import pandas as pd
 import os
-from makeAutomatic.inventario_automatico.src.carga_datos import detectar_tipo_archivo, cargar_desde_dropbox, cargar_desde_s3, cargar_desde_google_drive
-from makeAutomatic.inventario_automatico.src.carga_google_sheets import cargar_desde_google_sheets
+from inventario_automatico.src.carga_google_sheets import cargar_desde_google_sheets
+from inventario_automatico.src.carga_datos import detectar_tipo_archivo, cargar_desde_s3, cargar_desde_dropbox, cargar_desde_google_drive
 
 # Directorio base de los archivos de prueba
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

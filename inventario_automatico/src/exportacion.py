@@ -4,7 +4,6 @@ from odf.text import P
 from odf.table import Table, TableRow, TableCell
 from docx import Document
 
-
 def exportar_a_excel(df, ruta_salida):
     """ Guarda el DataFrame en un archivo Excel (.xlsx) """
     try:
