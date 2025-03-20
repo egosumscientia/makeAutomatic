@@ -1,7 +1,29 @@
+# Entornos virtuales
 .venv/
+venv/
+
+# Archivos de compilación de Python
 __pycache__/
 *.pyc
 *.pyo
+
+# Archivos de logs
 *.log
-data/
-reports/
+
+# Directorios de datos y reportes (cambia según tu estructura)
+data*/
+reports*/
+
+# Configuración de PyCharm
+.idea/
+
+# Archivos específicos de PyCharm (opcional, si prefieres conservar .idea/)
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries
+.idea/shelf/
+
+# Archivos de bases de datos locales (opcional)
+*.sqlite3
+*.db
