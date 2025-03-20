@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e0b1e356-c23d-4f8e-ab16-2693648485a7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/FakeInventGen/FakeInventGen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FakeInventGen/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/config/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/src/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/src/analitica.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/src/carga_datos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/src/carga_google_sheets.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/src/exportacion.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/src/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/tests/data/inventario.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/tests/data/inventario.ods" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/tests/data/inventario.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inventario_automatico/tests/test_carga_datos.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakeInventGen/FakeInventGen.py" beforeDir="false" afterPath="$PROJECT_DIR$/FakeInventGen/FakeInventGen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakeInventGen/inventario.ods" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakeInventGen/inventario.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FakeInventGen/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/FakeInventGen/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory_management/scripts/data_cleaner.py" beforeDir="false" afterPath="$PROJECT_DIR$/inventory_management/scripts/data_cleaner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
