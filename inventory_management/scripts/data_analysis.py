@@ -84,98 +84,127 @@ def valor_min_max(df):
 BASE_DIR = Path(__file__).resolve().parent.parent  # Ajustar según estructura del proyecto
 REPORTS_DIR = BASE_DIR / 'reports'
 
+
 def grafico_distribucion_stock(df):
     """
-    Genera y guarda un histograma de distribución de stock
-
-    Args:
-        df (pd.DataFrame): DataFrame con columna 'cantidad' para visualizar
-
-    Returns:
-        str: Ruta absoluta donde se guardó el gráfico
+    Genera histograma de distribución de stock con configuración auto-contenida
+    Versión 100% funcional sin estilos externos
     """
-    # Configuración del gráfico
-    plt.figure(figsize=(10, 6), dpi=100)
-    plt.hist(df["cantidad"],
-             bins=20,
-             color='#1f77b4',
-             edgecolor='black',
-             alpha=0.7)
+    # Configuración manual del estilo
+    plt.figure(figsize=(12, 7), dpi=120, facecolor='white')
 
-    # Estilo profesional
-    plt.title("Distribución de Cantidades en Stock", pad=20, fontweight='bold')
-    plt.xlabel("Unidades en Stock", labelpad=10)
-    plt.ylabel("Frecuencia", labelpad=10)
-    plt.grid(axis='y', linestyle=':', alpha=0.4)
+    # Limpieza de datos robusta
+    df['cantidad'] = pd.to_numeric(df['cantidad'], errors='coerce')
+    datos = df[df['cantidad'].notna() & (df['cantidad'] >= 0)]['cantidad']
 
-    # Ajustar layout automáticamente
-    plt.tight_layout()
+    # Configuración manual de estilo
+    plt.rcParams.update({
+        'axes.facecolor': 'white',
+        'axes.edgecolor': '0.3',
+        'axes.grid': True,
+        'grid.alpha': 0.3,
+        'grid.linestyle': ':',
+        'font.family': 'sans-serif'
+    })
 
-    # Manejo de rutas y guardado
-    REPORTS_DIR.mkdir(exist_ok=True)
-    filepath = REPORTS_DIR / 'distribucion_stock.png'
-
-    # Guardado en alta calidad
-    plt.savefig(
-        filepath,
-        dpi=300,
-        bbox_inches='tight',
-        facecolor='white'
+    # Histograma con configuración profesional
+    n_bins = min(15, len(datos.unique()))
+    hist_info = plt.hist(
+        datos,
+        bins=n_bins,
+        color='#3498db',
+        edgecolor='#ecf0f1',
+        alpha=0.85,
+        linewidth=1.5
     )
 
-    # Visualización condicional
-    if os.getenv('DISPLAY') and plt.isinteractive():
-        plt.show()
+    # Líneas de referencia (sin dependencias)
+    mediana = datos.median()
+    q75 = datos.quantile(0.75)
 
+    plt.axvline(mediana, color='#e74c3c', linestyle='--',
+                linewidth=1.5, label=f'Mediana ({mediana:.0f} uds)')
+    plt.axvline(q75, color='#f39c12', linestyle=':',
+                linewidth=1.5, label=f'75% Percentil ({q75:.0f} uds)')
+
+    # Diseño auto-contenido
+    plt.title('Distribución de Stock\nAnálisis Cuantitativo',
+              fontsize=14, pad=20, color='#2c3e50', fontweight='bold')
+    plt.xlabel('Unidades en Stock', fontsize=12, labelpad=10, color='#2c3e50')
+    plt.ylabel('Número de Productos', fontsize=12, labelpad=10, color='#2c3e50')
+
+    # Leyenda con fondo blanco
+    legend = plt.legend(frameon=True, facecolor='white')
+    for text in legend.get_texts():
+        text.set_color('#2c3e50')
+
+    # Guardado garantizado
+    REPORTS_DIR.mkdir(exist_ok=True)
+    filepath = REPORTS_DIR / 'stock_analizado_confiable.png'
+    plt.savefig(filepath, bbox_inches='tight', dpi=300)
     plt.close()
 
-    # Retornar ruta para posible uso posterior
-    return str(filepath.absolute())
+    print(f"✔ Gráfico generado con éxito en:\n{filepath.absolute()}")
 
 
 def grafico_valor_categoria(df):
     """
-    Genera y guarda un gráfico de barras horizontales del valor por categoría
-
-    Args:
-        df (pd.DataFrame): DataFrame con columnas 'cantidad', 'precio' y 'categoria'
-
-    Returns:
-        str: Ruta absoluta del archivo guardado
+    Versión mejorada que:
+    - Filtra categorías inválidas (como 'chair', 'feel')
+    - Maneja valores faltantes/erróneos
+    - Formatea correctamente los valores
     """
-    # Configuración del gráfico
-    plt.figure(figsize=(12, 7), dpi=100)
-    df["valor_total"] = df["cantidad"] * df["precio"]
+    plt.figure(figsize=(12, 7), dpi=120)
 
-    ax = df.groupby("categoria")["valor_total"].sum().sort_values().plot(
+    # Limpieza exhaustiva
+    df = df.copy()
+    df['precio'] = pd.to_numeric(df['precio'], errors='coerce').fillna(0)
+    df['cantidad'] = pd.to_numeric(df['cantidad'], errors='coerce').fillna(0)
+    df['valor_total'] = df['cantidad'] * df['precio']
+
+    # Normalización de categorías
+    categorias_validas = {
+        'Ferretería', 'Electricidad', 'Herramientas', 'Jardinería',
+        'Pintura', 'Electrónica', 'Construcción', 'Fontanería'
+    }
+
+    df['categoria'] = (
+        df['categoria']
+        .astype(str)
+        .str.strip()
+        .apply(lambda x: x if x in categorias_validas else 'Otros')
+    )
+
+    # Agrupamiento y filtrado
+    datos = (
+        df.groupby('categoria')['valor_total']
+        .sum()
+        .sort_values()
+        [lambda x: x > 0]  # Solo categorías con valor positivo
+    )
+
+    # Visualización profesional
+    ax = datos.plot(
         kind='barh',
         color='#2ca02c',
-        edgecolor='black',
-        alpha=0.7
+        edgecolor='white',
+        alpha=0.8,
+        width=0.85
     )
 
-    # Formateo profesional
-    ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${x / 1000:,.0f}K'))
-    plt.title("Valor por Categoría (en miles de USD)", pad=20, fontweight='bold')
+    # Formateo de ejes mejorado
+    ax.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda x, _: f'${x / 1000:,.1f}K'.replace(',', 'X').replace('.', ',').replace('X', '.'))
+    )
+
+    plt.title("Valor Real por Categoría (miles USD)", pad=20, fontweight='bold')
     plt.xlabel("Valor Total (USD)", labelpad=10)
-    plt.grid(axis='x', linestyle=':', alpha=0.4)
+    plt.grid(axis='x', linestyle=':', alpha=0.3)
     plt.tight_layout()
 
-    # Guardado con rutas absolutas
-    filepath = REPORTS_DIR / 'valor_categoria.png'
-    plt.savefig(
-        filepath,
-        dpi=300,
-        bbox_inches='tight',
-        facecolor='white',
-        transparent=False
-    )
-
-    # Visualización condicional
-    if os.getenv('DISPLAY') and plt.isinteractive():
-        plt.show()
-
+    # Guardado
+    filepath = REPORTS_DIR / 'valor_categoria_real.png'
+    plt.savefig(filepath, bbox_inches='tight', dpi=300, facecolor='white')
     plt.close()
 
-    print(f"\n✅ Gráfico guardado en: {filepath.absolute()}")
-    return str(filepath.absolute())
+    print(f"✅ Gráfico de categorías guardado en: {filepath.absolute()}")
