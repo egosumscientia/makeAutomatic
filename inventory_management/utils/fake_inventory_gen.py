@@ -59,7 +59,7 @@ def generar_nombre(categoria):
 
 def generar_cantidad():
     if random.random() < 0.1:  # 10% de probabilidad de error
-        return random.choice([-1, "N/A", "muchos", "", 99999])
+        return random.choice([-1, "N/A", "muchos", "", 1000])
     return random.randint(1, 1000)
 
 
